@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket.io Chat</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body{
+  font-family: Arial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#chat-container{
+  background-color: aqua;
+  border-radius: 10px;
+  height: 50vh;
+  width: 100vh;
+  margin-top: 50px;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+.heading{
+  border: solid 2px rgba(2, 2, 2, 0.794);
+  box-shadow: 5px 5px 5.5px rgba(84, 84, 84, 0.595);
+  background-color: rgba(0, 0, 0, 0.918);
+  color: white;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 5px;
+}
+#form{
+  background-color: yellow;
+  border: solid 2px rgba(223, 167, 24, 0.804);
+  box-shadow: 2.5px 2.5px 7.5px;
+  padding: 20px;
+}
+#input{
+  width: 300px;
+}
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <h1 class="heading">Chat-App</h1>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" placeholder="Start your fun conversation here..." autocomplete="off" /><button>Enter</button>
+    </form>
+  </div>
+  <script>
+    $(document).ready(function () {
+      var socket = io();
+
+      $('form').submit(function () {
+        socket.emit('chat message', $('#input').val());
+        $('#input').val('');
+        return false;
+      });
+
+      socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text(msg));
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+  
+
